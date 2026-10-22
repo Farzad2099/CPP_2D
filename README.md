@@ -14,7 +14,7 @@ This is the first version of the project. I may add more interesting mathematica
 
 
 <h2>🖼️ Preview</h2><p align="center">
-  <img src="images/tr1.jpg" alt="Radian Geometry Preview" height="900px" width="85%">
+  <img src="images/tr2.jpg" alt="Radian Geometry Preview" height="900px" width="85%">
 </p>
 <p align="center">
   <em>A circle, coordinate axes, and a right triangle generated from an angle in radians.</em>
@@ -139,6 +139,14 @@ It started as a free-time experiment combining trigonometry, coordinate geometry
 The project is still in its early stages, and I may continue improving it over time.
 
 ---
+
+## 🚀 Latest Release
+
+**v1.1.0** — Improved text rendering, coordinate labels,
+angle readability, and the build script.
+
+See the [Releases](../../releases) page for details.
+
 
 <p align="center">
   <strong>📐 A little math, a little C++, and a circle full of possibilities.</strong>
