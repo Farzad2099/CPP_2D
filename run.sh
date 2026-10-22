@@ -1,83 +1,47 @@
+
 #!/data/data/com.termux/files/usr/bin/bash
 
 FILE="test.cpp"
 OUTPUT="test"
 
+# Set the display for Termux:X11
 echo "[INFO] Setting DISPLAY..."
 export DISPLAY=:0
 
-# Check whether Termux:X11 is running
+# Check whether Termux:X11 is already running
 if pidof termux-x11 > /dev/null; then
-    echo "[INFO] Termux-X11 is already running."
+    echo "[INFO] Termux:X11 is already running."
 else
-    echo "[INFO] Starting Termux-X11..."
+    echo "[INFO] Starting Termux:X11..."
     termux-x11 :0 &
     sleep 2
 fi
 
-# Check source file
+# Check whether the source file exists
 if [ ! -f "$FILE" ]; then
     echo "[ERROR] File $FILE not found!"
     exit 1
 fi
 
-# Compile
+# Compile the C++ source file
 echo "[INFO] Compiling $FILE..."
 
 g++ "$FILE" -o "$OUTPUT" \
-    -lSDL2 -lSDL2_gfx -lSDL2_image
+    -lSDL2 -lSDL2_gfx -lSDL2_image -lSDL2_ttf
 
+# Stop if compilation fails
 if [ $? -ne 0 ]; then
     echo "[ERROR] Compilation failed!"
     exit 1
 fi
 
-# Run and keep the program alive
+# Run the program in the foreground
 echo "[INFO] Running program..."
 ./"$OUTPUT"
 
-echo "[INFO] Program closed. Returned to Termux."#!/data/data/com.termux/files/usr/bin/bash
+# Report when the program exits
+EXIT_CODE=$?
+echo "[INFO] Program closed with exit code $EXIT_CODE."
 
-FILE="test.cpp"
-OUTPUT="test"
-
-echo "[INFO] Setting DISPLAY..."
-export DISPLAY=:0
-
-# چک کردن اینکه X11 در حال اجرا هست یا نه
-if pidof termux-x11 > /dev/null; then
-    echo "[INFO] Termux-X11 is already running."
-else
-    echo "[INFO] Starting Termux-X11 ..."
-    termux-x11 :0 &
-    sleep 1
-fi
-
-# چک کردن وجود test.cpp
-if [ ! -f "$FILE" ]; then
-    echo "[ERROR] File $FILE not found!"
-    exit 1
-fi
-
-echo "[INFO] Compiling $FILE ..."
-g++ "$FILE" -o "$OUTPUT" -lSDL2 -lSDL2_gfx -lSDL2_image -lSDL2_ttf
-
-if [ $? -ne 0 ]; then
-    echo "[ERROR] Compilation failed!"
-    exit 1
-fi
-
-echo "[INFO] Running program in background..."
-./"$OUTPUT" &
-
-PID=$!
-echo "[INFO] Program PID = $PID"
-
-echo "[INFO] Waiting 10 seconds..."
-sleep 10
-
-echo "[INFO] Killing program..."
-kill $PID 2>/dev/null
-
-echo "[INFO] Done. Returned to Termux."
+exit "$EXIT_CODE"
 
